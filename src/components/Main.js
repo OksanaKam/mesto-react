@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../utils/Api';
 import Card from './Card';
 
-function Main(props) {
+function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
@@ -19,27 +19,27 @@ function Main(props) {
     .catch((err) => {
       console.log(err);
     });
-  }, [userName, userAvatar, userDescription]);
+  }, []);
   
   return (
       <main className="content">
         <section className="profile">
-          <div className="profile__avatar-group">
+          <div className="profile__avatar-group" onClick={onEditAvatar}>
             <img className="profile__avatar" alt="жак ив кусто" src={userAvatar} />
-            <button className="profile__avatar-button" type="button" id="avatar-button" aria-label="Изменить" onClick={props.onEditAvatar}></button>
+            <button className="profile__avatar-button" type="button" id="avatar-button" aria-label="Изменить"></button>
           </div>
           <div className="profile__profile-info">
             <h1 className="profile__title">{userName}</h1>
-            <button className="profile__edit-button" type="button" id="profile__edit-button" aria-label="Редактировать" onClick={props.onEditProfile}></button>
+            <button className="profile__edit-button" type="button" id="profile__edit-button" aria-label="Редактировать" onClick={onEditProfile}></button>
             <p className="profile__text">{userDescription}</p>
           </div>
-          <button className="profile__add-button" type="button" aria-label="Добавить" onClick={props.onAddPlace}></button>
+          <button className="profile__add-button" type="button" aria-label="Добавить" onClick={onAddPlace}></button>
         </section>
         <section>
           <ul className="elements">
             {cards.map(card => {
               return(
-                <Card name={card.name} link={card.link} likes={card.likes} key={card._id} onCardClick={props.onCardClick} card={card} />
+                <Card card={card} key={card._id} onCardClick={onCardClick} />
               );
             })}
           </ul>
